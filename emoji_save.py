@@ -38,9 +38,16 @@ def download(emoji, output_dir):
     except InvalidSchema:
         logger.warning(f'Skipping {name}')
     else:
-        with open(output_dir + '/' + name, 'w') as f:
-            content = str(r.content)
-            f.write(content)
+        # with open(output_dir + '/' + name, 'w') as f:
+        #     content = str(r.content)
+        #     f.write(content)
+        return name, str(r.content)
+
+
+def write(content, output_dir):
+    fname, data = content[0], content[1]
+    with open(output_dir + '/' + fname, 'w') as f:
+        f.write(content)
 
 
 if __name__ == '__main__':
@@ -63,6 +70,8 @@ if __name__ == '__main__':
         logger.warning(f'Using {args.processes} processes')
         m_download = partial(download, output_dir=args.folder)
         with Pool(processes=int(args.processes)) as pool:
-            pool.map(m_download, emojis)
+            content = pool.map(m_download, emojis)
+            m_write = partial(write, output_dir=args.folder)
+            pool.map(m_write, content)
     else:
         [download(emoji, args.folder) for emoji in emojis]
