@@ -27,7 +27,7 @@ async def run(emojis, output_dir):
             except:
                 logging.warning(f'Skipping over {key}')
             else:
-                async with open(output_dir + '/' + key, 'wb') as f:
+                with open(output_dir + '/' + key, 'wb') as f:
                     logging.info(f'Writing out {key}')
                     f.write(task)
 
@@ -39,5 +39,5 @@ if __name__ == '__main__':
         emojis_obj = json.load(f)
 
     loop = asyncio.get_event_loop()
-    future = asyncio.ensure_future(run(emojis_obj, 'output2'))
+    future = asyncio.ensure_future(run(emojis_obj, 'output'))
     loop.run_until_complete(future)
