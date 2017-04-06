@@ -20,3 +20,9 @@ To see full options run `python3 emoji_save.py --help`
 - Synchronous, multi process.  `python3 emoji_save.py -p 4`  (where p is number of processes)
 - TODO: Asynchronous, single process
 - TODO: Asynchronous, multi process
+
+## Testing
+
+Test are written with the standard library `unittest` suite.
+
+`python3 test.py` to run the tests.
